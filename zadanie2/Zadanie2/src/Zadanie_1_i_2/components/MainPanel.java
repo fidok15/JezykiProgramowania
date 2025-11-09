@@ -1,4 +1,4 @@
-package components;
+package Zadanie_1_i_2.components;
 
 import javax.swing.*;
 import java.awt.*;

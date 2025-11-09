@@ -1,4 +1,4 @@
-package components;
+package Zadanie_1_i_2.components;
 
 
 import javax.swing.*;
@@ -20,7 +20,7 @@ public class MainWindow extends JFrame{
     }
 
     public MainWindow() throws HeadlessException {
-        this("okno aplikacji");
+        this("zadanie 1 i 2");
     }
 
     public MainWindow(String title) throws HeadlessException {
