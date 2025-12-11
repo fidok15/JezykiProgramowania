@@ -27,7 +27,8 @@ public class Jedynaste_Main {
         System.out.println("\n");
 
         System.out.println("Dorzecze wisly");
-        lista.dorzecze("Wisła").forEach(r -> System.out.println(r.getPLnazwa()));
+        lista.dorzecze("Odra").forEach(r -> System.out.println(r.getPLnazwa()));
+        lista.dorzecze("Odra").forEach(r -> System.out.println(r.getCZnazwa()));
 
 
     }
