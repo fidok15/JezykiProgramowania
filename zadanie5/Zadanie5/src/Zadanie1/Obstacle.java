@@ -9,9 +9,9 @@ public class Obstacle extends GameObject {
     }
 
     public void update() {
-        x -= 5; // Przeszkoda porusza się w lewo
+        x -= 5; // przesuwanie przeszkody
         if (x < -50) {
-            x = 800; // Reset pozycji (pętla)
+            x = 800; // reset pozycji
         }
     }
 

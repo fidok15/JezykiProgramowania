@@ -11,6 +11,6 @@ public class Item extends GameObject {
     @Override
     public void draw(Graphics g) {
         g.setColor(color);
-        g.fillOval(x, y, width, height); // Przedmiot jako kółko (moneta)
+        g.fillOval(x, y, width, height);
     }
 }

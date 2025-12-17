@@ -5,11 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class GameState {
-    private Player player;
-    // Używamy listy synchronizowanej lub bloków synchronized,
-    // ponieważ Items są modyfikowane przez dwa różne wątki.
-    private List<Item> items;
-    private List<Obstacle> obstacles;
+    private final Player player;
+    private final List<Item> items;
+    private final List<Obstacle> obstacles;
     private int score = 0;
 
     public GameState(int floorY) {
@@ -17,7 +15,7 @@ public class GameState {
         items = Collections.synchronizedList(new ArrayList<>());
         obstacles = new ArrayList<>();
 
-        // Dodaj jedną startową przeszkodę
+        // dodaj startową przeszkodę
         obstacles.add(new Obstacle(600, floorY - 30));
     }
 
@@ -26,7 +24,7 @@ public class GameState {
     public List<Obstacle> getObstacles() { return obstacles; }
     public int getScore() { return score; }
 
-    // Metoda wywoływana przez GameLoop (Swing Timer)
+    // game loop
     public void updatePhysics() {
         player.move();
 
@@ -37,31 +35,26 @@ public class GameState {
         checkCollisions();
     }
 
-    // Dodawanie zasobów (Thread-safe) - dla ResourceSupplier
     public void addItem(Item item) {
-        // Synchronizacja nie jest tu krytyczna dzięki Collections.synchronizedList,
-        // ale dobra praktyka przy bardziej złożonej logice.
         items.add(item);
     }
 
-    // Sprawdzanie kolizji i usuwanie zebranych przedmiotów
+    // sprawdzanie kolizji i usuwanie zebranych przedmiotów
     private void checkCollisions() {
-        // Kolizja z przedmiotami (iteracja po kopii lub synchronized block aby uniknąć błędów)
         synchronized (items) {
             items.removeIf(item -> {
                 if (player.getBounds().intersects(item.getBounds())) {
-                    score += 10; // Aktualizacja wyniku
-                    return true; // Usuń przedmiot
+                    score += 10;
+                    return true;
                 }
                 return false;
             });
         }
 
-        // Kolizja z przeszkodami
+        // kolizja z przeszkodami
         for (Obstacle obs : obstacles) {
             if (player.getBounds().intersects(obs.getBounds())) {
-                System.out.println("GAME OVER! Wynik: " + score);
-                score = 0; // Reset gry (prosta logika)
+                score = 0; // reset gry (scora)
             }
         }
     }

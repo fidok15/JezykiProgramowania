@@ -12,16 +12,13 @@ public class SensorPanel extends JPanel {
     private final String unit;
 
     public SensorPanel(String title, String unit, SensorBuffer buffer) {
-        this.buffer = buffer; // Teraz przypisanie zadziała poprawnie przed użyciem
+        this.buffer = buffer;
         this.unit = unit;
 
-        // Konfiguracja wyglądu
         setLayout(new BorderLayout());
         setBorder(new TitledBorder(title));
-        // Ustawiamy preferowany rozmiar, żeby panele nie były ściśnięte
         setPreferredSize(new Dimension(250, 300));
 
-        // Etykieta z bieżącą wartością
         valueLabel = new JLabel("Oczekiwanie...", SwingConstants.CENTER);
         valueLabel.setFont(new Font("Arial", Font.BOLD, 24));
         valueLabel.setOpaque(true);
@@ -29,24 +26,20 @@ public class SensorPanel extends JPanel {
         valueLabel.setForeground(Color.GREEN);
         add(valueLabel, BorderLayout.NORTH);
 
-        // Obszar historii
+        // historiia
         historyArea = new JTextArea();
         historyArea.setEditable(false);
         historyArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
         add(new JScrollPane(historyArea), BorderLayout.CENTER);
 
-        // Timer odświeżający interfejs (KONSUMENT)
-        // Zmieniono nazwę metody w wywołaniu:
         Timer uiTimer = new Timer(200, e -> refreshData());
         uiTimer.start();
     }
 
-    // ZMIANA NAZWY METODY: updateUI -> refreshData
-    // updateUI jest metodą wbudowaną w JPanel i nie wolno jej nadpisywać do własnej logiki
     private void refreshData() {
-        if (buffer == null) return; // Zabezpieczenie na wypadek wywołania przed inicjalizacją
+        if (buffer == null) return;
 
-        // Odczyt z bufora
+        // odczyt z bufora
         Measurement latest = buffer.getLatest();
         List<Measurement> history = buffer.getHistorySnapshot();
 
@@ -61,7 +54,7 @@ public class SensorPanel extends JPanel {
             }
         }
 
-        // Aktualizacja listy historii
+        // aktualizacja listy historii
         StringBuilder sb = new StringBuilder();
         for (Measurement m : history) {
             sb.append(m.toString()).append("\n");

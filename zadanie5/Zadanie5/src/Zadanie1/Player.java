@@ -19,21 +19,20 @@ public class Player extends GameObject {
         x += dx;
         y += dy;
 
-        // Grawitacja
+        // opadanie
         if (y < FLOOR_Y - height) {
             dy += GRAVITY;
         } else {
-            y = FLOOR_Y - height; // Zatrzymanie na podłodze
+            y = FLOOR_Y - height; // podloga
             dy = 0;
         }
 
-        // Ograniczenie ekranu (lewo/prawo)
         if (x < 0) x = 0;
         if (x > 750) x = 750;
     }
 
     public void jump() {
-        if (y == FLOOR_Y - height) { // Skok tylko z podłogi
+        if (y == FLOOR_Y - height) { // skok tylko z podłogi
             dy = JUMP_STRENGTH;
         }
     }
@@ -45,6 +44,6 @@ public class Player extends GameObject {
     @Override
     public void draw(Graphics g) {
         g.setColor(color);
-        g.fillRect(x, y, width, height); // Gracz jako kwadrat
+        g.fillRect(x, y, width, height); // gracz jako kwadrat
     }
 }

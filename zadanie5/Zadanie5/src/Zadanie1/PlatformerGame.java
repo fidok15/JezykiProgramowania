@@ -9,15 +9,13 @@ import java.awt.event.KeyEvent;
 
 public class PlatformerGame extends JFrame {
 
-    private GameState gameState;
-    private GamePanel gamePanel;
+    private final GameState gameState;
+    private final GamePanel gamePanel;
     private final int FLOOR_Y = 400;
 
     public PlatformerGame() {
-        // Inicjalizacja modelu
         gameState = new GameState(FLOOR_Y);
 
-        // Inicjalizacja widoku
         gamePanel = new GamePanel(gameState);
 
         setupFrame();
@@ -26,7 +24,6 @@ public class PlatformerGame extends JFrame {
     }
 
     private void setupFrame() {
-        setTitle("Platformer Swing Multithreading");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -56,26 +53,23 @@ public class PlatformerGame extends JFrame {
     }
 
     private void startThreads() {
-        // 1. WĄTEK LOGIKI GRY I ANIMACJI (Swing Timer)
-        // Działa na wątku EDT (Event Dispatch Thread), co jest bezpieczne dla UI
-        Timer gameLoop = new Timer(16, new ActionListener() { // ~60 FPS
+        // logika gry i animacje
+        Timer gameLoop = new Timer(16, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameState.updatePhysics(); // Aktualizacja pozycji
-                gamePanel.repaint();       // Żądanie przerysowania
+                gameState.updatePhysics();
+                gamePanel.repaint();
             }
         });
         gameLoop.start();
 
-        // 2. WĄTEK DOSTAWCY ZASOBÓW (Background Thread)
-        // Działa całkowicie niezależnie od pętli gry
         ResourceSupplier supplier = new ResourceSupplier(gameState, FLOOR_Y);
         Thread supplierThread = new Thread(supplier);
         supplierThread.start();
     }
 
     public static void main(String[] args) {
-        // Uruchomienie w wątku Swinga
+        // uruchomienie w wątku Swinga
         javax.swing.SwingUtilities.invokeLater(() -> {
             new PlatformerGame().setVisible(true);
         });

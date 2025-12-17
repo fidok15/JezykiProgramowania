@@ -11,17 +11,17 @@ public class MonitoringSystem extends JFrame {
         setSize(850, 400);
         setLayout(new GridLayout(1, 3, 10, 10)); // Siatka dla 3 czujników
 
-        // Inicjalizacja buforów
+        // bufor
         SensorBuffer tempBuffer = new SensorBuffer(20);
         SensorBuffer humBuffer = new SensorBuffer(20);
         SensorBuffer pressBuffer = new SensorBuffer(20);
 
-        // Tworzenie GUI i przekazanie buforów
+        // gui
         add(new SensorPanel("Temperatura", "°C", tempBuffer));
         add(new SensorPanel("Wilgotność", "%", humBuffer));
         add(new SensorPanel("Ciśnienie", "hPa", pressBuffer));
 
-        // Uruchamianie wątków czujników
+
         // Temperatura: 15.0 - 30.0
         startSensorThread(tempBuffer, "TEMP", 15.0, 35.0);
 

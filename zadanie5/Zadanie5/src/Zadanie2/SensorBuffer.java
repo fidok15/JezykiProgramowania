@@ -12,10 +12,9 @@ public class SensorBuffer {
         this.capacity = capacity;
     }
 
-    // Metoda Producenta (Wątek czujnika)
     public synchronized void addMeasurement(double value) {
         Measurement m = new Measurement(value);
-        buffer.addFirst(m); // Dodajemy na początek (najnowsze)
+        buffer.addFirst(m);
 
         // Utrzymujemy stały rozmiar bufora, usuwając stare dane
         if (buffer.size() > capacity) {
@@ -23,7 +22,6 @@ public class SensorBuffer {
         }
     }
 
-    // Metoda Konsumenta
     public synchronized Measurement getLatest() {
         if (buffer.isEmpty()) {
             return null;
@@ -31,7 +29,6 @@ public class SensorBuffer {
         return buffer.getFirst();
     }
 
-    // Pobranie kopii historii do wyświetlenia listy
     public synchronized List<Measurement> getHistorySnapshot() {
         return new LinkedList<>(buffer);
     }

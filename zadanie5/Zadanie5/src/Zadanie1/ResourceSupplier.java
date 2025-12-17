@@ -3,10 +3,10 @@ package Zadanie1;
 import java.util.Random;
 
 public class ResourceSupplier implements Runnable {
-    private GameState gameState;
+    private final GameState gameState;
     private boolean running = true;
-    private Random random = new Random();
-    private int floorY;
+    private final Random random = new Random();
+    private final int floorY;
 
     public ResourceSupplier(GameState gameState, int floorY) {
         this.gameState = gameState;
@@ -17,12 +17,12 @@ public class ResourceSupplier implements Runnable {
     public void run() {
         while (running) {
             try {
-                // Symulacja czasu potrzebnego na wygenerowanie zasobu (np. co 2-4 sekundy)
+                // symulacja czasu potrzebnego na wygenerowanie nagrody
                 Thread.sleep(random.nextInt(2000) + 2000);
 
-                // Tworzenie przedmiotu w losowym miejscu (ale nie za nisko/wysoko)
+                // tworzenie przedmiotu (nagrody) w losowym miejscu
                 int x = random.nextInt(700) + 50;
-                int y = floorY - 40 - random.nextInt(100); // Nieco nad ziemią
+                int y = floorY - 40 - random.nextInt(100);
 
                 System.out.println("Dostawca: Dodano nowy przedmiot na pozycji: " + x);
                 gameState.addItem(new Item(x, y));

@@ -8,8 +8,8 @@ public class SensorThread implements Runnable {
     private final Random random;
     private volatile boolean running = true;
 
-    // Parametry do symulacji różnych zakresów danych
-    private double minVal, maxVal;
+    private final double minVal;
+    private final double maxVal;
 
     public SensorThread(SensorBuffer buffer, String sensorType, double minVal, double maxVal) {
         this.buffer = buffer;
@@ -23,17 +23,14 @@ public class SensorThread implements Runnable {
     public void run() {
         while (running) {
             try {
-                // Symulacja czasu pomiaru (np. co 0.5 - 1.5 sekundy)
+                // czas pomiaru co
                 Thread.sleep(500 + random.nextInt(1000));
 
-                // Generowanie losowej wartości w zakresie
+                // losowa wartosc w zakresie
                 double val = minVal + (maxVal - minVal) * random.nextDouble();
 
-                // Zapis do współdzielonego zasobu
+                // zapis do bufora
                 buffer.addMeasurement(val);
-
-                // Opcjonalnie logowanie w konsoli dla weryfikacji
-                // System.out.println(sensorType + " wysłał: " + val);
 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
